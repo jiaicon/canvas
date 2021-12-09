@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1, user-scalable=no">
+  <title>Title</title>
+  <link rel="stylesheet" href="./css/initial.css">
+</head>
+<body>
+<canvas id="canvas" width="320" height="568"></canvas>
+<img src="./imgs/loading.png" alt="">
+</body>
+<script src="./js/preload.js"></script>
+<script src="./js/utils.js"></script>
+<script src="./js/bgScroll.js"></script>
+<script>
+  // 屏幕大小
+  let sw = 320;
+  let sh = 568;
+  window.onload = () => {
+    preload(gameStart());
+  }
+
+  if (isMobile()) {
+    sw = window.innerWidth;
+    sh = window.innerHeight;
+  }
+  let canvas = document.getElementById('canvas');
+  let ctx = canvas.getContext('2d');
+  canvas.width = sw;
+  canvas.height = sh;
+
+
+  let timer = null;
+  // 游戏开始
+  function gameStart() {
+    document.querySelector("img").style.display="none";
+    // timer = setInterval(begin, 30);
+    begin();
+  }
+  function begin() {
+    timer = requestAnimationFrame(begin);
+    ctx.clearRect(0, 0, sw, sh);
+    // 1. 背景滚动
+    bgScroll();
+    // 2. 英雄
+    hero.draw();
+    control();
+    // 3. 创建敌机
+    createEnemy();
+    // 4. 创建子弹
+    createBullet();
+    // 5. 创建奖励
+    // 6. 碰撞
+    allMove();
+    // 7. 结束
+    createResult();
+  }
+</script>
+<script src="./js/hero.js"></script>
+<script src="./js/controlHero.js"></script>
+<script src="./js/rect.js"></script>
+<script src="./js/bullet.js"></script>
+<script src="./js/prop.js"></script>
+<script src="./js/enemy.js"></script>
+<script src="./js/check.js"></script>
+<script src="./js/result.js"></script>
+</html>
